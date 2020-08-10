@@ -11,9 +11,9 @@ Usage
 docker run -d --name fusionpbx \
 	–net=host \
 	-v /etc/localtime:/etc/localtime:ro \
-	-v ${data_dir}:/data \
+	-v /mnt/data/fusionpbx:/data \
 	-e PGPASSWORD=${postgres_pass} \
-	kinsamanka/fusionpbx 
+	tusc/fusionpbx-freeswitch 
 ```
 Access FusionPBX through: 
 ```
