@@ -17,6 +17,7 @@ GRANT ALL PRIVILEGES ON DATABASE freeswitch to fusionpbx;
 GRANT ALL PRIVILEGES ON DATABASE freeswitch to freeswitch;
 EOF
 
+sed -i 's/#port = 5432/port = 15432/' ${PGDATA}/postgresql.conf
 fi
 
 su postgres -c "/usr/bin/postgres -D ${PGDATA} -c config_file=${PGDATA}/postgresql.conf"
