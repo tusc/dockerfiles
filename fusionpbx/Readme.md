@@ -1,6 +1,4 @@
-![alt text][logo]
-[logo]: https://raw.githubusercontent.com/fusionpbx/fusionpbx-docs/master/source/_static/images/logo.png "FusionPBX Logo"
-
+![FusionPBX Logo](logo.png)
 
 # Minimal Alpine-based FusionPBX Image for the UDM/pro
 
