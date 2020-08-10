@@ -2,7 +2,7 @@
 [logo]: https://raw.githubusercontent.com/fusionpbx/fusionpbx-docs/master/source/_static/images/logo.png "FusionPBX Logo"
 
 
-# Minimal Alpine-based FusionPBX Image
+# Minimal Alpine-based FusionPBX Image for the UDM/pro
 
 Usage
 -----
