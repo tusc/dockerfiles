@@ -1,20 +1,22 @@
-FROM alpine:3.5
-MAINTAINER GP Orcullo
+#FROM arm64v8/alpine:3.11
+FROM alpine:3.11
 
-ENV FP_VER 4.2.2
+#ADD qemu-aarch64-static /usr/bin
+
+ENV FP_VER 4.4.1
 
 RUN apk add --no-cache curl dnsmasq freeswitch-flite nginx php7-curl php7-fpm \
-	php7-imap php7-json php7-mcrypt php7-odbc php7-pdo php7-pdo_pgsql \
-	php7-pgsql php7-session php7-sqlite3 php7-xml php7 postgresql \
-	supervisor \
+        php7-imap php7-json php7-mcrypt php7-odbc php7-pdo php7-pdo_pgsql \
+        php7-pgsql php7-session php7-sqlite3 php7-xml php7-simplexml php7 postgresql \
+        supervisor \
     && echo "pid /tmp/nginx.pid;" >> /etc/nginx/nginx.conf \
     && sed -e 's_nobody_nginx_g' \
-	   -e 's_127.0.0.1:9000_/tmp/fpm.sock_g' \
-	   -e 's_;listen.o_listen.o_g' \
-	   -e 's_;listen.g_listen.g_g' \
-	   -e 's_;listen.m_listen.m_g' \
-	   -i /etc/php7/php-fpm.d/www.conf \
-    && ln /usr/bin/php7 /usr/bin/php \
+           -e 's_127.0.0.1:9000_/tmp/fpm.sock_g' \
+           -e 's_;listen.o_listen.o_g' \
+           -e 's_;listen.g_listen.g_g' \
+           -e 's_;listen.m_listen.m_g' \
+           -i /etc/php7/php-fpm.d/www.conf \
+#    && ln /usr/bin/php7 /usr/bin/php \
     && cd /var/www \
     && curl -L https://github.com/fusionpbx/fusionpbx/archive/${FP_VER}.tar.gz | tar xzf - \
     && mv fusionpbx*/ fusionpbx \
@@ -28,7 +30,11 @@ RUN apk add --no-cache curl dnsmasq freeswitch-flite nginx php7-curl php7-fpm \
     && chown -R nginx:nginx /usr/share/freeswitch \
     && chown -R nginx:nginx /var/log/freeswitch \
     && chown -R nginx:nginx /var/run/freeswitch \
+#    && sed -i 's/listen 127.0.0.1:80/listen 127.0.0.1:9180/' /etc/nginx/conf.d/default.conf \
+#    && sed -i 's/listen 80/listen 9180/' /etc/nginx/conf.d/default.conf \
     && mkdir /etc/fusionpbx \
+    && mkdir /run/postgresql \
+    && chown postgres:postgres /run/postgresql \
     && chown -R nginx:nginx /etc/fusionpbx \
     && mkdir -p /data.org/lib /data.org/share /data \
     && chmod 0777 -R /data.org \
